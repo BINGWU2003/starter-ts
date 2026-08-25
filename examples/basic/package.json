@@ -17,6 +17,6 @@
     "@scope/config": "workspace:*"
   },
   "engines": {
-    "node": ">=22.18.0"
+    "node": "^22.18.0 || ^24.0.0"
   }
 }

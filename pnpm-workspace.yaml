@@ -6,6 +6,11 @@ allowBuilds:
   esbuild: true
   simple-git-hooks: true
 
+engineStrict: true
+managePackageManagerVersions: true
+packageManagerStrict: true
+packageManagerStrictVersion: true
+
 catalog:
   '@changesets/changelog-github': ^1.0.0
   '@changesets/cli': ^3.0.1

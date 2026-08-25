@@ -6,7 +6,7 @@ Oxlint 负责代码检查和规则修复，Oxfmt 统一格式化仓库，tsdown 
 
 ## 特性
 
-- Node.js ESM only，最低支持 Node.js 22.18
+- Node.js ESM only，支持 Node.js 22.18+ 与 24.x
 - `packages/config`：只导出共享 base 的纯配置包
 - `packages/core`：可发布的 TypeScript 库
 - `examples/basic`：直接消费 workspace 包的最小示例
@@ -43,6 +43,7 @@ rg '@scope|YOUR_NAME|OWNER/REPOSITORY|BINGWU2003/starter-ts'
 │  └─ core/            # 可发布库，拥有自己的 Oxc、Vitest、tsdown 与 tsconfig 配置
 ├─ examples/
 │  └─ basic/           # 消费示例，拥有自己的 Oxc 与 tsconfig 配置
+├─ .npmrc              # npm/Node.js 引擎严格校验
 ├─ .oxfmtrc.json       # 整个仓库共享的 Oxfmt 配置
 └─ turbo.json          # 只负责任务编排与缓存
 ```
@@ -62,7 +63,8 @@ TypeScript、测试和构建由各自配置与脚本负责；Turbo 只编排这�
 
 ## 开发
 
-需要 Node.js 22.18 或更高版本，以及 Corepack 提供的 pnpm：
+需要 Node.js 22.18+ 或 24.x，以及 Corepack 提供的 pnpm 11.15.1。`.npmrc` 与
+`pnpm-workspace.yaml` 会严格校验 `package.json` 声明的 Node.js 和 pnpm 版本：
 
 ```bash
 corepack enable
