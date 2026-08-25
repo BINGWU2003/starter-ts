@@ -1,4 +1,4 @@
-name: Unit Test
+name: CI
 
 on:
   push:
@@ -6,14 +6,90 @@ on:
   pull_request:
     branches: [main]
 
-permissions: {}
+concurrency:
+  cancel-in-progress: true
+  group: ${{ github.workflow }}-${{ github.ref }}
+
+permissions:
+  contents: read
 
 jobs:
-  unit-test:
-    uses: sxzz/workflows/.github/workflows/unit-test.yml@main
+  check:
+    name: Static checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
 
-  # coverage:
-  #   uses: sxzz/workflows/.github/workflows/coverage.yml@main
-  #   needs: unit-test
-  #   permissions:
-  #     id-token: write
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          cache: pnpm
+          node-version: 24
+
+      - name: Restore Turbo cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          key: ${{ runner.os }}-node-24-turbo-${{ hashFiles('pnpm-lock.yaml') }}
+          path: .turbo
+          restore-keys: |
+            ${{ runner.os }}-node-24-turbo-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check formatting
+        run: pnpm format:check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+  test:
+    name: Test (${{ matrix.os }}, Node.js ${{ matrix.node }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22, 24]
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@fc06bc1257f339d1d5d8b3a19a8cae5388b55320 # v4.4.0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          cache: pnpm
+          node-version: ${{ matrix.node }}
+
+      - name: Restore Turbo cache
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
+        with:
+          key: ${{ runner.os }}-node-${{ matrix.node }}-turbo-${{ hashFiles('pnpm-lock.yaml') }}
+          path: .turbo
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node }}-turbo-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Test
+        run: pnpm test
+
+      - name: Validate package
+        run: pnpm --filter @scope/core exec publint
+
+      - name: Run basic example
+        run: pnpm --filter @scope/example-basic start

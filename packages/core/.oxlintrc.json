@@ -1,0 +1,4 @@
+{
+  "$schema": "https://unpkg.com/oxlint@1.79.0/configuration_schema.json",
+  "extends": ["../config/src/oxlint.json"]
+}

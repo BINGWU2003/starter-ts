@@ -1,13 +1,11 @@
-.cache
 .DS_Store
-.githooks
+.env
+.env.*
+!.env.example
+.turbo
 .idea
 *.log
 *.tgz
 coverage
 dist
-lib-cov
-logs
 node_modules
-skills/npm-*
-temp

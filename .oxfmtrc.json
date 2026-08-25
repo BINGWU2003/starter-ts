@@ -1,0 +1,10 @@
+{
+  "$schema": "https://unpkg.com/oxfmt@0.64.0/configuration_schema.json",
+  "endOfLine": "lf",
+  "printWidth": 100,
+  "semi": false,
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "all",
+  "useTabs": false
+}
