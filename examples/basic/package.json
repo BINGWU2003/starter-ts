@@ -5,16 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "lint": "oxlint .",
-    "lint:fix": "oxlint . --fix",
     "start": "tsx src/index.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@scope/core": "workspace:*"
-  },
-  "devDependencies": {
-    "@scope/config": "workspace:*"
   },
   "engines": {
     "node": "^22.18.0 || ^24.0.0"

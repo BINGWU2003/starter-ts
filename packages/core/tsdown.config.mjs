@@ -1,7 +1,11 @@
-import baseConfig from '@scope/config/tsdown'
 import { defineConfig } from 'tsdown'
 
 export default defineConfig({
-  ...baseConfig,
+  clean: true,
+  dts: true,
   entry: ['src/index.ts'],
+  format: ['esm'],
+  minify: false,
+  publint: true,
+  sourcemap: true,
 })

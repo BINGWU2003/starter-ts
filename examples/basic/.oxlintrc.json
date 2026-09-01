@@ -1,4 +1,0 @@
-{
-  "$schema": "https://unpkg.com/oxlint@1.79.0/configuration_schema.json",
-  "extends": ["../../packages/config/src/oxlint.json"]
-}

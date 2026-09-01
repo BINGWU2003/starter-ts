@@ -1,6 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": ["packages/config/**"],
+  "globalDependencies": ["tsconfig.base.json", "tsconfig.node.json"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -10,12 +10,6 @@
       "cache": false,
       "dependsOn": ["^build"],
       "persistent": true
-    },
-    "lint": {
-      "outputs": []
-    },
-    "lint:fix": {
-      "cache": false
     },
     "test": {
       "dependsOn": ["build"],

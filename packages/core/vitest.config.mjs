@@ -1,4 +1,11 @@
-import baseConfig from '@scope/config/vitest'
 import { defineConfig } from 'vitest/config'
 
-export default defineConfig(baseConfig)
+export default defineConfig({
+  test: {
+    clearMocks: true,
+    environment: 'node',
+    restoreMocks: true,
+    unstubEnvs: true,
+    unstubGlobals: true,
+  },
+})

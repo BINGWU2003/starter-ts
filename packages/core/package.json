@@ -32,14 +32,9 @@
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",
-    "lint": "oxlint .",
-    "lint:fix": "oxlint . --fix",
     "prepack": "pnpm build && publint",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
-  },
-  "devDependencies": {
-    "@scope/config": "workspace:*"
   },
   "engines": {
     "node": "^22.18.0 || ^24.0.0"
