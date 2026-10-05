@@ -42,8 +42,8 @@ rg '@scope|YOUR_NAME|OWNER/REPOSITORY|BINGWU2003/starter-ts'
 ├─ examples/
 │  └─ basic/           # 消费示例，只保留 TypeScript 项目配置
 ├─ .npmrc              # npm/Node.js 引擎严格校验
-├─ .oxlintrc.json      # 整个仓库共享的 Oxlint 配置
-├─ .oxfmtrc.json       # 整个仓库共享的 Oxfmt 配置
+├─ oxlint.config.ts    # 整个仓库共享的 Oxlint 配置
+├─ oxfmt.config.ts     # 整个仓库共享的 Oxfmt 配置
 ├─ tsconfig.base.json  # TypeScript 公共编译选项
 ├─ tsconfig.node.json  # Node.js workspace 的 TypeScript 配置
 └─ turbo.json          # 只负责任务编排与缓存
@@ -79,8 +79,8 @@ pnpm check
 | `pnpm test`         | 运行 Vitest 测试                      |
 | `pnpm check`        | 运行提交前的完整验证                  |
 
-提交时，nano-staged 会使用根 `.oxlintrc.json` 修复暂存的 JavaScript/TypeScript 文件，再用
-根 `.oxfmtrc.json` 格式化所有匹配文件。
+提交时，nano-staged 会使用根 `oxlint.config.ts` 修复暂存的 JavaScript/TypeScript 文件，再用
+根 `oxfmt.config.ts` 格式化所有匹配文件。
 
 运行消费示例：
 

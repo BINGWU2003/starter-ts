@@ -20,12 +20,12 @@ function createCommands(filenames, { command, configName, extensions }) {
 export default ({ filenames }) => [
   ...createCommands(filenames, {
     command: 'oxlint --fix --no-error-on-unmatched-pattern',
-    configName: '.oxlintrc.json',
+    configName: 'oxlint.config.ts',
     extensions: lintExtensions,
   }),
   ...createCommands(filenames, {
     command: 'oxfmt --write --disable-nested-config --no-error-on-unmatched-pattern',
-    configName: '.oxfmtrc.json',
+    configName: 'oxfmt.config.ts',
     extensions: formatExtensions,
   }),
 ]
