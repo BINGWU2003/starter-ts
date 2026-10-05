@@ -7,9 +7,7 @@ allowBuilds:
   simple-git-hooks: true
 
 engineStrict: true
-managePackageManagerVersions: true
-packageManagerStrict: true
-packageManagerStrictVersion: true
+pmOnFail: download
 
 catalog:
   '@changesets/changelog-github': ^1.0.1
