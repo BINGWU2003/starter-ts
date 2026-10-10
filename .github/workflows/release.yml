@@ -14,6 +14,8 @@ permissions:
 
 jobs:
   release:
+    # 模板默认跳过发布；准备好 npm 包后设置仓库变量 ENABLE_RELEASE=true。
+    if: ${{ vars.ENABLE_RELEASE == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -37,10 +39,10 @@ jobs:
       - name: Create release pull request or publish
         uses: changesets/action@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          commit: 'chore: 发布新版本'
-          publish: pnpm release
-          title: 'chore: 发布新版本'
-          version: pnpm version-packages
+          commit-message: 'chore: 发布新版本'
+          pr-title: 'chore: 发布新版本'
+          publish-script: pnpm release
+          version-script: pnpm version-packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: true

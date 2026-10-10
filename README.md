@@ -91,6 +91,30 @@ pnpm --filter @scope/example-basic start
 
 ## 发布
 
+模板默认不启用自动发布：未设置仓库变量 `ENABLE_RELEASE=true` 时，Release workflow 的
+发布任务会跳过，不会创建版本 PR、发布 npm 包或创建 GitHub Release。CI 验证仍正常运行。
+
+### 启用自动发布
+
+从模板创建项目并替换包名、仓库信息后，按以下步骤配置：
+
+1. 首次发布需要先在本地登录 npm 并创建包，将以下命令中的包名替换为你的实际包名：
+
+   ```bash
+   pnpm --filter @your-scope/your-package publish --access public
+   ```
+
+2. 在 npm 包的 **Trusted Publisher** 设置中绑定 GitHub 仓库和工作流文件 `release.yml`。
+   工作流使用 OIDC 发布，不需要长期保存 `NPM_TOKEN`。
+3. 在 GitHub 仓库的 **Settings → Actions → General → Workflow permissions** 中启用
+   **Allow GitHub Actions to create and approve pull requests**，以便 Changesets 创建版本 PR。
+4. 在 **Settings → Secrets and variables → Actions → Variables** 中添加仓库变量
+   `ENABLE_RELEASE`，值设为 `true`。
+
+变量启用后，下次推送到 `main` 就会执行发布流程。删除变量或将值设为 `false` 可再次停用。
+
+### 日常发布
+
 面向用户的变更应先创建 changeset：
 
 ```bash
@@ -99,15 +123,6 @@ pnpm changeset
 
 合并到 `main` 后，Release workflow 会创建或更新版本 PR。合并版本 PR 后，workflow 会构建、
 发布 npm 包，并由 Changesets 创建 GitHub Release。
-
-首次发布需要先在本地登录 npm 并创建包：
-
-```bash
-pnpm --filter @scope/core publish --access public
-```
-
-随后在 npm 包的 **Trusted Publisher** 设置中绑定 GitHub 仓库和
-`.github/workflows/release.yml`。工作流使用 OIDC 发布，不需要长期保存 `NPM_TOKEN`。
 
 ## Turbo 远程缓存
 
